@@ -19,7 +19,45 @@ struct student {
 	char name[10];
 	int score;
 };
+void quicksort(struct student *x, int start, int end)
+{
+	int pivot, j, i;
+	struct student temp;
+
+	if (start < end)
+	{
+		pivot = start;
+		i = start;
+		j = end;
+
+		while (i < j)
+		{
+			while (x[i].score >= x[pivot].score && i < end)
+				i++;
+			while (x[j].score < x[pivot].score)
+				j--;
+			if (i < j)
+			{
+				temp = x[i];
+				x[i] = x[j];
+				x[j] = temp;
+			}
+		}
+
+		temp = x[pivot];
+		x[pivot] = x[j];
+		x[j] = temp;
+		quicksort(x, start, j - 1);
+		quicksort(x, j + 1, end);
+
+	}
+}
 
 void * scoresDescendingSort(struct student *students, int len) {
-	return NULL;
+	if (!students || len < 0)
+		return NULL;
+	if (len == 1)
+		return students;
+	quicksort(students, NULL, len - 1);
+
 }

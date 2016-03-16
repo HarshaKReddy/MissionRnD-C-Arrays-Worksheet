@@ -12,8 +12,33 @@ NOTES:
 */
 
 #include <stdio.h>
-
-void * sortedArrayPositionsChange(int *Arr, int len)
+void swap(int *a, int *b)
 {
-	return NULL;
+	*a = *a + *b;
+	*b = *a - *b;
+	*a = *a - *b;
 }
+void * sortedArrayPositionsChange(int *Arr, int len){
+	if (!Arr || len < 0)
+		return NULL;
+	int i;
+
+	for (i = 0; i < len - 1; i++)
+	{
+		if (Arr[i] > Arr[i + 1])
+		{
+			int j;
+			for (j = len - 1; j >= i; j--)
+			{
+				if (Arr[j] < Arr[j - 1])
+				{
+					swap(&Arr[i], &Arr[j]);
+					return Arr;
+				}
+			}
+		}
+	}
+
+	return Arr;
+}
+
